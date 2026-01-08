@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:game_minesweaper/service_injection.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../navigator_action.dart';
 import '../../utils/exports.dart';
 import '../../widgets/custom_button.dart';
-import '../settings_view/settings_view.dart';
-import '../statistics_view/statistics_view.dart';
+// import '../settings_view/settings_view.dart';
+// import '../statistics_view/statistics_view.dart';
 import 'components/animated_play_button.dart';
 import 'components/miniature_minefield.dart';
 
@@ -35,36 +37,48 @@ class _HomeViewState extends State<HomeView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: CustomButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const StatisticsView(),
-                              ));
-                        },
-                        elevation: 6,
-                        icon: Icons.bar_chart,
-                        text: 'Statistics',
-                        iconSize: GameSizes.getWidth(0.06),
-                        height: GameSizes.getHeight(0.06),
-                      ),
-                    ),
-                    SizedBox(width: GameSizes.getWidth(0.05)),
+                    // Expanded(
+                    //   child: CustomButton(
+                    //     onPressed: () {
+                    //       Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //             builder: (context) => const StatisticsView(),
+                    //           ));
+                    //     },
+                    //     elevation: 6,
+                    //     icon: Icons.bar_chart,
+                    //     text: 'Statistics',
+                    //     iconSize: GameSizes.getWidth(0.06),
+                    //     height: GameSizes.getHeight(0.06),
+                    //   ),
+                    // ),
+                    // SizedBox(width: GameSizes.getWidth(0.05)),
+                    // Expanded(
+                    //   child: CustomButton(
+                    //     onPressed: () async {
+                    //       await Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //             builder: (context) => const SettingsView(),
+                    //           ));
+                    //       setState(() {});
+                    //     },
+                    //     elevation: 6,
+                    //     icon: Icons.settings,
+                    //     text: "Settings",
+                    //     iconSize: GameSizes.getWidth(0.06),
+                    //     height: GameSizes.getHeight(0.06),
+                    //   ),
+                    // ),
                     Expanded(
                       child: CustomButton(
                         onPressed: () async {
-                          await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SettingsView(),
-                              ));
-                          setState(() {});
+                          injection<NavigatorAction>().execute();
                         },
                         elevation: 6,
-                        icon: Icons.settings,
-                        text: "Settings",
+                        icon: Icons.chevron_left,
+                        text: 'Exit',
                         iconSize: GameSizes.getWidth(0.06),
                         height: GameSizes.getHeight(0.06),
                       ),
