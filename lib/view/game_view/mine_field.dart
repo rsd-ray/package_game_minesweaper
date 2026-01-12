@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../controller/game_controller.dart';
 import '../../helper/shared_helper.dart';
 import '../../model/tile_model.dart';
+import '../../service_injection.dart';
+import '../../set_score_action.dart';
 import '../../utils/exports.dart';
 import '../../widgets/game_popup_screen.dart';
 
@@ -62,16 +64,16 @@ class Grass extends StatelessWidget {
           await gameController.clickTile(tile)?.then((win) async {
             if (win != null) {
               final sharedHelper = await SharedHelper.init();
-              int? bestTime =
-                  await sharedHelper.getBestTime(gameController.gameMode);
+              int? bestTime = await sharedHelper.getBestTime(gameController.gameMode);
               if (win) {
-                await sharedHelper.updateAverageTime(
-                    gameController.gameMode, gameController.timeElapsed);
+
+                injection<SetScoreAction>().execute(bestTime ?? 0);
+
+                await sharedHelper.updateAverageTime(gameController.gameMode, gameController.timeElapsed);
                 await sharedHelper.increaseGamesWon(gameController.gameMode);
                 if (gameController.timeElapsed < (bestTime ?? 999)) {
                   bestTime = gameController.timeElapsed;
-                  await sharedHelper.setBestTime(
-                      gameController.gameMode, bestTime);
+                  await sharedHelper.setBestTime(gameController.gameMode, bestTime);
                 }
               }
               return (win, bestTime);
